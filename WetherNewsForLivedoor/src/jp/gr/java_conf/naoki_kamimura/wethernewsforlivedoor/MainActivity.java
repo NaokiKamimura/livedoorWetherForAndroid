@@ -25,8 +25,6 @@ public class MainActivity extends Activity {
 				finish();
 			}
 		});
-		makeToast("test");
-		makeDialog("タイトル", "本文");
 	}
 
 	@Override
