@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="crimzon" >#CD5C5C</color>
+    <color name="brack">#000000</color>
+    <color name="background_color">#f0f0b0</color>
+    <color name="steluth">#00000000</color>
+    <color name="white">#ffffff</color>
+    <color name="floralwhite">#fffaf0</color>
+    <color name="blue">#0000e0</color>
+    <color name="khaki">#f0e68c</color>
+</resources>
