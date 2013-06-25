@@ -1,3 +1,7 @@
+/*
+ * @(#)Http.java        0.50 13/06/25
+ * Copyright(c) 2012-2013 NaokiKamimura,All rights reserved
+ */
 package jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor;
 
 import android.app.Activity;
@@ -32,13 +36,14 @@ public class SecondActivity extends Activity {
 				ListView list = (ListView) parent;
 				String msg = "index:" + position;
 				makeToast(msg);
-				//タッチされた場所のアイテムを取得する
-				String item = (String) list.getItemAtPosition(position);
+				// タッチされた場所のアイテムを取得する
+				String item = "item:"
+						+ (String) list.getItemAtPosition(position);
 				makeToast(item);
 
 			}
 		});
-		//ダミーデータ終わり
+		// ダミーデータ終わり
 
 	}
 

@@ -6,6 +6,7 @@
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
     <string name="main_button">表示する</string>
+    <string name="app_title">HTTP接続＋JSON解析+サンプル</string>
 
     <!-- SecondActivity -->
     <string name="title_activity_second">本日の天気</string>
