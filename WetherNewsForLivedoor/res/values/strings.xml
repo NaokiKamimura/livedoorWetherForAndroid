@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">WetherNewsForLivedoor</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_second">本日の天気</string>
+    <string name="main_button">表示する</string>
+    <string name="renew_button">更新</string>
+
+</resources>
