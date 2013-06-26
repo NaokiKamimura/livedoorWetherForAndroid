@@ -6,6 +6,9 @@ package jp.gr.java_conf.naoki_kamimura.json;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.List;
 
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
@@ -16,15 +19,14 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
-public class Json{
+public class Json {
 	private Context jsonContext;
-	
+
 	/**
 	 * @version 1.00 25 June 2013
-	 * @author NaokiKamimura
-	 * Gsonライブラリを使い解析テスト用にまずJSON形式で生成する
+	 * @author NaokiKamimura Gsonライブラリを使い解析テスト用にまずJSON形式で生成する
 	 */
-	// 
+	//
 	public void createJson() {
 		LogUtil log = new LogUtil();
 		// Gsonのオブジェクト作成
@@ -35,8 +37,7 @@ public class Json{
 
 	/**
 	 * @version 1.00 25 June 2013
-	 * @author NaokiKamimura
-	 * JSONファイルを解析する
+	 * @author NaokiKamimura JSONファイルを解析する
 	 */
 	public void readJson(Context context) {
 		LogUtil log = new LogUtil();
@@ -45,24 +46,24 @@ public class Json{
 			Gson gson = new Gson();
 			jsonContext = context;
 			log.output("logFlag", "0");
-			//AssetManagerでファイルパスを指定する
+			// AssetManagerでファイルパスを指定する
 			AssetManager assetManager = context.getResources().getAssets();
-			// TODO ここから先が読み込まれていないので、パスの指定がおかしい気がする
-			FileReader reader = new FileReader("/jsonfile/v1.json");
+			//JSONを読み込む
+			InputStream is;
+			is = assetManager.open("jsonfile/v1.json");
+			Reader reader = new InputStreamReader(is);
 			log.output("logFlag", "1");
 			v1 = gson.fromJson(reader, V1.class);// JSON
-			reader.close();
 			List<PinpointLocations> pinpointLocations = v1
 					.getPinpointLocations();
 			String jsonLog = "";
-			String jsonSize = String.valueOf(pinpointLocations.size());
+			String jsonSize = String.valueOf(pinpointLocations.size());//読み込んだ
 			log.output("logFlag", "2");
 			for (int i = 0; i < pinpointLocations.size(); i++) {
 				jsonLog = pinpointLocations.get(i).toString();
-				log.output("logFlag", "3");
-				log.output("jsonLog", jsonSize);
 				log.output("jsonLog", jsonLog);
 			}
+			log.output("tag", "jsonSize:" + jsonSize);
 
 		} catch (FileNotFoundException e) {
 			log.output("fileNotFound", "");
