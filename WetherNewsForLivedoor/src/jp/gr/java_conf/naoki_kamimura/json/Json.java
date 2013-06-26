@@ -56,12 +56,15 @@ public class Json {
 			v1 = gson.fromJson(reader, V1.class);// JSON
 			List<PinpointLocations> pinpointLocations = v1
 					.getPinpointLocations();
-			String jsonLog = "";
+			String name = "";
+			String link = "";
 			String jsonSize = String.valueOf(pinpointLocations.size());//ì«Ç›çûÇÒÇæ
 			log.output("logFlag", "2");
 			for (int i = 0; i < pinpointLocations.size(); i++) {
-				jsonLog = pinpointLocations.get(i).toString();
-				log.output("jsonLog", jsonLog);
+				name = pinpointLocations.get(i).getName();
+				link = pinpointLocations.get(i).getLink();
+				log.output("jsonLog", name);
+				log.output("jsonLog", link);
 			}
 			log.output("tag", "jsonSize:" + jsonSize);
 
