@@ -10,12 +10,15 @@ import java.util.List;
 
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
 
+import android.content.Context;
+import android.content.res.AssetManager;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
-public class Json {
-
+public class Json{
+	private Context jsonContext;
+	
 	/**
 	 * @version 1.00 25 June 2013
 	 * @author NaokiKamimura
@@ -35,12 +38,15 @@ public class Json {
 	 * @author NaokiKamimura
 	 * JSONファイルを解析する
 	 */
-	public void readJson() {
+	public void readJson(Context context) {
 		LogUtil log = new LogUtil();
 		V1 v1;
 		try {
 			Gson gson = new Gson();
+			jsonContext = context;
 			log.output("logFlag", "0");
+			//AssetManagerでファイルパスを指定する
+			AssetManager assetManager = context.getResources().getAssets();
 			// TODO ここから先が読み込まれていないので、パスの指定がおかしい気がする
 			FileReader reader = new FileReader("/jsonfile/v1.json");
 			log.output("logFlag", "1");

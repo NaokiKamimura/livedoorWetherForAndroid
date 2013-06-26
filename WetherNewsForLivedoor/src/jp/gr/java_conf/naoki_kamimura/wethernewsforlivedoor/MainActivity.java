@@ -8,6 +8,7 @@ import jp.gr.java_conf.naoki_kamimura.json.Json;
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,8 +26,9 @@ public class MainActivity extends Activity {
 		//Jsonクラスでテストを吐き出す
 		Json json = new Json();
 		LogUtil log = new LogUtil();
+		Context context = getApplicationContext();
 		Log.v("logFlag","-1");
-		json.readJson();
+		json.readJson(context);
 		Button button = (Button) findViewById(R.id.main_button);
 		//表示するボタンを押すとSecondActivityへ移動する
 		button.setOnClickListener(new View.OnClickListener() {
