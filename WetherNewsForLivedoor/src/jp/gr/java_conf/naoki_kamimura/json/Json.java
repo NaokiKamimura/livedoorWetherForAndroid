@@ -5,17 +5,16 @@
 package jp.gr.java_conf.naoki_kamimura.json;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.List;
 
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
-
+import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.SecondActivity;
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -41,10 +40,15 @@ public class Json {
 	 */
 	public void readJson(Context context) {
 		LogUtil log = new LogUtil();
+		SecondActivity second = new SecondActivity();
+		List<String> nameList = new ArrayList<String>();
+		List<String> linkList = new ArrayList<String>();
+		
 		V1 v1;
+		jsonContext = context;
 		try {
 			Gson gson = new Gson();
-			jsonContext = context;
+			//渡されたコンテキストを代入
 			log.output("logFlag", "0");
 			// AssetManagerでファイルパスを指定する
 			AssetManager assetManager = context.getResources().getAssets();
@@ -53,19 +57,22 @@ public class Json {
 			is = assetManager.open("jsonfile/v1.json");
 			Reader reader = new InputStreamReader(is);
 			log.output("logFlag", "1");
-			v1 = gson.fromJson(reader, V1.class);// JSON
+			v1 = gson.fromJson(reader, V1.class);
 			List<PinpointLocations> pinpointLocations = v1
 					.getPinpointLocations();
 			String name = "";
 			String link = "";
-			String jsonSize = String.valueOf(pinpointLocations.size());//読み込んだ
-			log.output("logFlag", "2");
+			String jsonSize = String.valueOf(pinpointLocations.size());
+			//読み込んだJSONの長さ分値を取得
 			for (int i = 0; i < pinpointLocations.size(); i++) {
-				name = pinpointLocations.get(i).getName();
-				link = pinpointLocations.get(i).getLink();
-				log.output("jsonLog", name);
-				log.output("jsonLog", link);
+				name = pinpointLocations.get(i).getName();//市区町村の取得
+				nameList.add(name);//市区町村をリストへ
+				link = pinpointLocations.get(i).getLink();//天気予報画面の取得
+				linkList.add(link);//リンクをリストへ
+				log.output("jsonName:" + i, name);
+				log.output("jsonLink:" + i, link);
 			}
+			second.listArray(nameList);//リストビューへ
 			log.output("tag", "jsonSize:" + jsonSize);
 
 		} catch (FileNotFoundException e) {

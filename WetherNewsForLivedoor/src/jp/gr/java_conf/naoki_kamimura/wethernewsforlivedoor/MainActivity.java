@@ -27,7 +27,6 @@ public class MainActivity extends Activity {
 		Json json = new Json();
 		LogUtil log = new LogUtil();
 		Context context = getApplicationContext();
-		Log.v("logFlag","-1");
 		json.readJson(context);
 		Button button = (Button) findViewById(R.id.main_button);
 		//•\Ž¦‚·‚éƒ{ƒ^ƒ“‚ð‰Ÿ‚·‚ÆSecondActivity‚ÖˆÚ“®‚·‚é
