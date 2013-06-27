@@ -66,18 +66,6 @@ public class SecondActivity extends Activity {
 
 	}
 
-	/*
-	 * public ArrayAdapter<String> screenDisplay_List(List<String> list) {
-	 * List<String> arrayList = new ArrayList<String>(); // TODO
-	 * arrayListへJSONのListを入れる
-	 * 
-	 * // JSONのデータをadapterへ入れる ArrayAdapter<String> adapter = new
-	 * ArrayAdapter<String>(this, android.R.layout.simple_list_item_1); String
-	 * inArrayListText = ""; // arrayListの要素数だけadapterへ挿入 for (int i = 0; i <
-	 * arrayList.size(); i++) { inArrayListText = arrayList.get(i);
-	 * adapter.add(inArrayListText); } return adapter; }
-	 */
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -180,7 +168,6 @@ public class SecondActivity extends Activity {
 			adapter.add(inArrayListText);
 		}
 		return adapter;
-
 	}
 
 }

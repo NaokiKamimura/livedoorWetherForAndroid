@@ -4,17 +4,8 @@
  */
 package jp.gr.java_conf.naoki_kamimura.json;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.List;
-
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
-import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.SecondActivity;
 import android.content.Context;
-import android.content.res.AssetManager;
 
 import com.google.gson.Gson;
 
@@ -34,50 +25,6 @@ public class Json {
 		log.output("testJson", testJson);
 	}
 
-	/**
-	 * @version 1.00 25 June 2013
-	 * @author NaokiKamimura JSONファイルを解析する
-	 */
-	public void readJson(Context context) {
-		LogUtil log = new LogUtil();
-		List<String> nameList = new ArrayList<String>();
-		List<String> linkList = new ArrayList<String>();
-
-		V1 v1;//JSONのマッピングしたオブジェクトのあるクラス
-		jsonContext = context;
-		try {
-			Gson gson = new Gson();
-			// 渡されたコンテキストを代入
-			log.output("logFlag", "0");
-			// AssetManagerでファイルパスを指定する
-			AssetManager assetManager = context.getResources().getAssets();
-			// JSONを読み込む
-			InputStream iStream;
-			iStream = assetManager.open("jsonfile/v1.json");
-			Reader reader = new InputStreamReader(iStream);
-			log.output("logFlag", "1");
-			v1 = gson.fromJson(reader, V1.class);
-			List<PinpointLocations> pinpointLocations = v1
-					.getPinpointLocations();
-			String name = "";// 市区町村の取得
-			String link = "";// 天気予報画面URLの取得
-			String jsonSize = String.valueOf(pinpointLocations.size());
-			// 読み込んだJSONの長さ分値を取得
-			for (int i = 0; i < pinpointLocations.size(); i++) {
-				name = pinpointLocations.get(i).getName();
-				nameList.add(name);// 市区町村をリストへ
-				link = pinpointLocations.get(i).getLink();
-				linkList.add(link);// リンクをリストへ
-				log.output("jsonName:" + i, name);
-				log.output("jsonLink:" + i, link);
-			}
-			log.output("tag", "jsonSize:" + jsonSize);
-
-		} catch (FileNotFoundException e) {
-			log.output("fileNotFound", "");
-		} catch (Exception e) {
-			log.output("Error", "");
-		}
-	}
+	
 
 }
