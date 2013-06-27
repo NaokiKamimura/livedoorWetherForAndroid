@@ -40,39 +40,39 @@ public class Json {
 	 */
 	public void readJson(Context context) {
 		LogUtil log = new LogUtil();
-		SecondActivity second = new SecondActivity();
+		SecondActivity secondActivity = new SecondActivity();
 		List<String> nameList = new ArrayList<String>();
 		List<String> linkList = new ArrayList<String>();
-		
-		V1 v1;
+
+		V1 v1;//JSONのマッピングしたオブジェクトのあるクラス
 		jsonContext = context;
 		try {
 			Gson gson = new Gson();
-			//渡されたコンテキストを代入
+			// 渡されたコンテキストを代入
 			log.output("logFlag", "0");
 			// AssetManagerでファイルパスを指定する
 			AssetManager assetManager = context.getResources().getAssets();
-			//JSONを読み込む
-			InputStream is;
-			is = assetManager.open("jsonfile/v1.json");
-			Reader reader = new InputStreamReader(is);
+			// JSONを読み込む
+			InputStream iStream;
+			iStream = assetManager.open("jsonfile/v1.json");
+			Reader reader = new InputStreamReader(iStream);
 			log.output("logFlag", "1");
 			v1 = gson.fromJson(reader, V1.class);
 			List<PinpointLocations> pinpointLocations = v1
 					.getPinpointLocations();
-			String name = "";
-			String link = "";
+			String name = "";// 市区町村の取得
+			String link = "";// 天気予報画面URLの取得
 			String jsonSize = String.valueOf(pinpointLocations.size());
-			//読み込んだJSONの長さ分値を取得
+			// 読み込んだJSONの長さ分値を取得
 			for (int i = 0; i < pinpointLocations.size(); i++) {
-				name = pinpointLocations.get(i).getName();//市区町村の取得
-				nameList.add(name);//市区町村をリストへ
-				link = pinpointLocations.get(i).getLink();//天気予報画面の取得
-				linkList.add(link);//リンクをリストへ
+				name = pinpointLocations.get(i).getName();
+				nameList.add(name);// 市区町村をリストへ
+				link = pinpointLocations.get(i).getLink();
+				linkList.add(link);// リンクをリストへ
 				log.output("jsonName:" + i, name);
 				log.output("jsonLink:" + i, link);
 			}
-			second.listArray(nameList);//リストビューへ
+			secondActivity.screenDisplay_List(nameList);// setterへ
 			log.output("tag", "jsonSize:" + jsonSize);
 
 		} catch (FileNotFoundException e) {

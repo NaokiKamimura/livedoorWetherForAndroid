@@ -23,18 +23,19 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		//Jsonクラスでテストを吐き出す
+		// Jsonクラスでテストを吐き出す
 		Json json = new Json();
 		LogUtil log = new LogUtil();
 		Context context = getApplicationContext();
 		json.readJson(context);
 		Button button = (Button) findViewById(R.id.main_button);
-		//表示するボタンを押すとSecondActivityへ移動する
+		// 表示するボタンを押すとSecondActivityへ移動する
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Json json = new Json();
-				Intent intent = new Intent(MainActivity.this,SecondActivity.class);
+				Intent intent = new Intent(MainActivity.this,
+						SecondActivity.class);
 				startActivity(intent);
 				finish();
 			}
