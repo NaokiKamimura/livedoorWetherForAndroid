@@ -4,14 +4,11 @@
  */
 package jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor;
 
-import jp.gr.java_conf.naoki_kamimura.json.Json;
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
@@ -24,16 +21,15 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		// Jsonクラスでテストを吐き出す
-		Json json = new Json();
+		// Json json = new Json();
 		LogUtil log = new LogUtil();
-		Context context = getApplicationContext();
-		json.readJson(context);
+		// Context context = getApplicationContext();
+		// json.readJson(context);
 		Button button = (Button) findViewById(R.id.main_button);
 		// 表示するボタンを押すとSecondActivityへ移動する
 		button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Json json = new Json();
 				Intent intent = new Intent(MainActivity.this,
 						SecondActivity.class);
 				startActivity(intent);

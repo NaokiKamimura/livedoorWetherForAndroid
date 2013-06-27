@@ -5,6 +5,8 @@
 
 package jp.gr.java_conf.naoki_kamimura.util;
 
+import org.apache.http.impl.client.DefaultHttpClient;
+
 public class Http {
 
 	/**
@@ -12,6 +14,7 @@ public class Http {
 	 * @author NaokiKamimura HTTP’ÊM‚ğŠJn‚·‚é
 	 */
 	public void Connection() {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
 
 	}
 

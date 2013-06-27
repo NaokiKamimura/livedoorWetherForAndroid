@@ -40,7 +40,6 @@ public class Json {
 	 */
 	public void readJson(Context context) {
 		LogUtil log = new LogUtil();
-		SecondActivity secondActivity = new SecondActivity();
 		List<String> nameList = new ArrayList<String>();
 		List<String> linkList = new ArrayList<String>();
 
@@ -72,7 +71,6 @@ public class Json {
 				log.output("jsonName:" + i, name);
 				log.output("jsonLink:" + i, link);
 			}
-			secondActivity.screenDisplay_List(nameList);// setter‚Ö
 			log.output("tag", "jsonSize:" + jsonSize);
 
 		} catch (FileNotFoundException e) {
