@@ -35,7 +35,7 @@ public class SecondActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_second);
 		readJson();// JSON解析
-		// TODO リストビューを呼びたい
+		// ListViewを表示
 		listView();
 	}
 
