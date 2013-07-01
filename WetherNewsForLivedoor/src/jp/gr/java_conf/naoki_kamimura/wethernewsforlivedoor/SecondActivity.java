@@ -1,5 +1,5 @@
 /*
- * @(#)Http.java        0.50 13/06/25
+ * @(#)Http.java        1.00 13/06/25
  * Copyright(c) 2012-2013 NaokiKamimura,All rights reserved
  */
 package jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor;
@@ -9,15 +9,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import jp.gr.java_conf.naoki_kamimura.http.ConnectionThread;
+import jp.gr.java_conf.naoki_kamimura.http.Http;
 import jp.gr.java_conf.naoki_kamimura.json.PinpointLocations;
 import jp.gr.java_conf.naoki_kamimura.json.V1;
 import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
-
-import com.google.gson.Gson;
-
+import jp.gr.java_conf.naoki_kamimura.util.ToastUtil;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -26,17 +25,31 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
+
+import com.google.gson.Gson;
 
 public class SecondActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_second);
+
+		Button restart = (Button) findViewById(R.id.restart_button);
 		readJson();// JSON解析
 		// ListViewを表示
 		listView();
+
+		// 更新ボタンの処理
+		restart.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//コネクションの開始
+				Thread thread = new Thread(new ConnectionThread());
+				thread.start();
+			}
+		});
 	}
 
 	/**
@@ -46,6 +59,8 @@ public class SecondActivity extends Activity {
 	private void listView() {
 		// 画面表示用ListView
 		ListView listView = (ListView) findViewById(R.id.listview);
+		final ToastUtil toast = new ToastUtil();
+		final Context context = getApplicationContext();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
 		adapter = getJSONAdapter();// JSONデータの格納されたadapterを貰う
@@ -56,11 +71,11 @@ public class SecondActivity extends Activity {
 					int position, long id) {
 				ListView list = (ListView) parent;
 				String msg = "index:" + position;
-				makeToast(msg);
+				toast.makeToast(context, msg);
 				// (テスト用)タッチされた場所のアイテムを取得する
 				String item = "item:"
 						+ (String) list.getItemAtPosition(position);
-				makeToast(item);
+				toast.makeToast(context, item);
 			}
 		});
 
@@ -71,15 +86,6 @@ public class SecondActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.second, menu);
 		return true;
-	}
-
-	/**
-	 * @version 1.00 27 June 2013
-	 * @author NaokiKamimura トースト通知を表示する
-	 */
-	public void makeToast(String message) {
-		Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT)
-				.show();
 	}
 
 	/**

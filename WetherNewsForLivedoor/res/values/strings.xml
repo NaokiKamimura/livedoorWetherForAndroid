@@ -10,6 +10,8 @@
 
     <!-- SecondActivity -->
     <string name="title_activity_second">本日の天気</string>
-    <string name="renew_button">更新</string>
+    <string name="restart_button">更新</string>
 
+    <!-- HTTPクラス -->
+    <string name="connectionBegin">接続を開始しました</string>
 </resources>

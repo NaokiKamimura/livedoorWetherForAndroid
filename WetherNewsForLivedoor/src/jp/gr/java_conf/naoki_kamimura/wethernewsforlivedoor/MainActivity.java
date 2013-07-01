@@ -1,10 +1,9 @@
 /*
- * @(#)Http.java        0.50 13/06/25
+ * @(#)Http.java        1.00 13/06/25
  * Copyright(c) 2012-2013 NaokiKamimura,All rights reserved
  */
 package jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor;
 
-import jp.gr.java_conf.naoki_kamimura.util.LogUtil;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -20,11 +19,6 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		// Jsonクラスでテストを吐き出す
-		// Json json = new Json();
-		LogUtil log = new LogUtil();
-		// Context context = getApplicationContext();
-		// json.readJson(context);
 		Button button = (Button) findViewById(R.id.main_button);
 		// 表示するボタンを押すとSecondActivityへ移動する
 		button.setOnClickListener(new View.OnClickListener() {
