@@ -32,7 +32,7 @@ public class SecondActivity extends Activity {
 		Json json = new Json();
 		Context context = getApplicationContext();
 		Button restart = (Button) findViewById(R.id.restart_button);
-		json.readJsonNameList(context);// JSON解析
+		json.readNameList(context);// JSON解析
 		listView();// ListViewを表示
 
 		// 更新ボタンの処理
@@ -58,7 +58,7 @@ public class SecondActivity extends Activity {
 		final Context con = getApplicationContext();
 		ArrayAdapter<String> nameListAdapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1);
-		nameListAdapter = json.getJSONNameListAdapter(con);// JSON名前データの格納されたadapterを貰う
+		nameListAdapter = json.getNameListAdapter(con);// JSON名前データの格納されたadapterを貰う
 		listView.setAdapter(nameListAdapter);// adapterのセット
 		// ListViewの処理
 		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -76,7 +76,7 @@ public class SecondActivity extends Activity {
 				toast.makeToast(con, item);
 				// リストの押した項目と位置を送る
 				List<String> linkList = new ArrayList<String>();// リンクアドレスを格納するArrayList
-				linkList = json.readJsonLinkList(context);// リンクアドレスを格納
+				linkList = json.readLinkList(context);// リンクアドレスを格納
 				String linkPosition = linkList.get(position);// 押したindexに対応するアドレス
 				intent.putExtra("name", item);
 				intent.putExtra("index", linkPosition);

@@ -67,7 +67,7 @@ public class Json {
 	 * @author NaokiKamimura JSONファイルを解析する
 	 * @return 市区町村の入ったList
 	 */
-	public List<String> readJsonNameList(Context context) {
+	public List<String> readNameList(Context context) {
 		LogUtil log = new LogUtil();
 		Http http = new Http();
 		List<String> nameList = new ArrayList<String>();
@@ -98,7 +98,7 @@ public class Json {
 	 * @author NaokiKamimura JSONファイルを解析する
 	 * @return 天気予報リンクアドレスの入ったList
 	 */
-	public List<String> readJsonLinkList(Context context) {
+	public List<String> readLinkList(Context context) {
 		LogUtil log = new LogUtil();
 		List<String> linkList = new ArrayList<String>();
 		try {
@@ -120,9 +120,9 @@ public class Json {
 	 * @author NaokiKamimura
 	 * @return JSON名前リストデータの入ったadapter
 	 */
-	public ArrayAdapter<String> getJSONNameListAdapter(Context context) {
+	public ArrayAdapter<String> getNameListAdapter(Context context) {
 		List<String> adapterList = new ArrayList<String>();
-		adapterList = readJsonNameList(context);
+		adapterList = readNameList(context);
 		// JSONのデータをadapterへ入れる
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_list_item_1);
