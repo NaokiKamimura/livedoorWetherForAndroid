@@ -5,19 +5,13 @@
     android:background="@color/khaki"
     android:orientation="vertical" >
 
-    <TextView
-        android:id="@+id/secondActivity_TextView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="0.22"
-        android:gravity="center" />
-
     <ListView
         android:id="@+id/listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1.03"
-        android:background="@color/khaki" >
+        android:background="@color/steluth"
+        android:listSelector="@color/brack" >
     </ListView>
 
     <LinearLayout

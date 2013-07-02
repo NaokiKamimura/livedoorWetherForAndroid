@@ -31,8 +31,6 @@ public class SecondActivity extends Activity {
 		setContentView(R.layout.activity_second);
 		Json json = new Json();
 		Context context = getApplicationContext();
-		TextView header = (TextView) findViewById(R.id.secondActivity_TextView);
-
 		Button restart = (Button) findViewById(R.id.restart_button);
 		json.readJsonNameList(context);// JSON解析
 		listView();// ListViewを表示
@@ -74,8 +72,7 @@ public class SecondActivity extends Activity {
 				ListView list = (ListView) parent;
 				String msg = "index:" + position;
 				toast.makeToast(con, msg);
-				// (テスト用)タッチされた場所のアイテムを取得する
-				String item = (String) list.getItemAtPosition(position);
+				String item = (String) list.getItemAtPosition(position);//タッチした場所の名前を取得
 				toast.makeToast(con, item);
 				// リストの押した項目と位置を送る
 				List<String> linkList = new ArrayList<String>();// リンクアドレスを格納するArrayList

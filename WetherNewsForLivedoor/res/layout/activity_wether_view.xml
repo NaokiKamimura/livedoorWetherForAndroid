@@ -5,11 +5,13 @@
     android:background="@color/khaki"
     android:orientation="vertical"
     tools:context=".WetherView" >
-     <TextView
+
+    <TextView
         android:id="@+id/wetherview_textView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
+        android:textIsSelectable="true"
         android:gravity="center" />
 
     <WebView

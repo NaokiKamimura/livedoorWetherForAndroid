@@ -62,22 +62,6 @@ public class Json {
 		return pinpointLocations;
 	}
 
-	private List<PinpointLocations> jsonText(String jsonData) {
-		LogUtil log = new LogUtil();
-		List<PinpointLocations> pinpointLocations = null;
-		V1 v1;// JSONのマッピングしたオブジェクトのあるクラス
-		try {
-			Gson gson = new Gson();
-			// 渡されたコンテキストを代入
-			log.output("logFlag", "0");
-			v1 = gson.fromJson(jsonData, V1.class);
-			pinpointLocations = v1.getPinpointLocations();
-		} catch (Exception e) {
-			log.output("Error", "");
-		}
-		return pinpointLocations;
-	}
-
 	/**
 	 * @version 1.00 25 June 2013
 	 * @author NaokiKamimura JSONファイルを解析する
