@@ -21,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class SecondActivity extends Activity {
 	@Override
@@ -33,6 +32,10 @@ public class SecondActivity extends Activity {
 		Button restart = (Button) findViewById(R.id.restart_button);
 		json.readNameList(context);// JSON解析
 		listView();// ListViewを表示
+
+		// コネクションの開始
+		Thread thread = new Thread(new ConnectionThread());
+		thread.start();
 
 		// 更新ボタンの処理
 		restart.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +74,7 @@ public class SecondActivity extends Activity {
 				ListView list = (ListView) parent;
 				String msg = "index:" + position;
 				toast.makeToast(con, msg);
-				String item = (String) list.getItemAtPosition(position);//タッチした場所の名前を取得
+				String item = (String) list.getItemAtPosition(position);// タッチした場所の名前を取得
 				toast.makeToast(con, item);
 				// リストの押した項目と位置を送る
 				List<String> linkList = new ArrayList<String>();// リンクアドレスを格納するArrayList

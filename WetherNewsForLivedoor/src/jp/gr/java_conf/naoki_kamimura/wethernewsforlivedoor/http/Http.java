@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.json.Json;
 import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.util.LogUtil;
 
 import org.apache.http.HttpResponse;
@@ -22,11 +23,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 
 public class Http {
-
-	public String jsonAddress() {
-
-		return null;
-	}
 
 	/**
 	 * @version 1.00 27 June 2013
@@ -75,9 +71,11 @@ public class Http {
 	 * @version 1.00 02 July 2013
 	 * @author NaokiKamimura HTTP通信を開始する
 	 * @param アドレス名
+	 *            オーバーロード
 	 */
 	public void connection(String address) {
 		LogUtil log = new LogUtil();
+		Json json = new Json();
 		HttpClient httpClient = new DefaultHttpClient();
 		log.output("URL:", address);// URLのログを出す
 		try {
@@ -91,10 +89,9 @@ public class Http {
 			case HttpStatus.SC_OK:
 				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 				response.getEntity().writeTo(outputStream);// レスポンスの情報を書込
-				String data;// JSONデータ
-				data = outputStream.toString();
+				//TODO dataを解析メソッドへ受け渡す方法を確立する
+				String data = outputStream.toString();// レスポンスデータのセット
 				log.output("status", "status code = " + statusCode);
-				log.output("status", data);
 				break;
 			// 404
 			case HttpStatus.SC_FORBIDDEN:

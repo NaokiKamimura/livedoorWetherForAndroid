@@ -20,6 +20,7 @@ import android.widget.ArrayAdapter;
 import com.google.gson.Gson;
 
 public class Json {
+
 	/**
 	 * @version 1.00 25 June 2013
 	 * @author NaokiKamimura Gsonライブラリを使い解析テスト用にまずJSON形式で生成する
@@ -37,27 +38,44 @@ public class Json {
 	 * @author NaokiKamimura リストを更新するボタンの処理
 	 * @return JSON文字列を格納したList
 	 */
-	private List<PinpointLocations> jsonText(Context context) {
+	private List<PinpointLocations> scanJSON(Context context) {
 		LogUtil log = new LogUtil();
 		List<PinpointLocations> pinpointLocations = null;
 		V1 v1;// JSONのマッピングしたオブジェクトのあるクラス
 		try {
 			Gson gson = new Gson();
-			// 渡されたコンテキストを代入
-			log.output("logFlag", "0");
 			// AssetManagerでファイルパスを指定する
 			AssetManager assetManager = context.getResources().getAssets();
 			// JSONを読み込む
 			InputStream iStream;
 			iStream = assetManager.open("jsonfile/v1.json");
 			Reader reader = new InputStreamReader(iStream);
-			log.output("logFlag", "1");
 			v1 = gson.fromJson(reader, V1.class);
 			pinpointLocations = v1.getPinpointLocations();
 		} catch (FileNotFoundException e) {
-			log.output("fileNotFound", "");
+			log.output("fileNotFound", e.toString());
 		} catch (Exception e) {
-			log.output("Error", "");
+			log.output("Error", e.toString());
+		}
+		return pinpointLocations;
+	}
+
+	/**
+	 * @version 1.00 27 June 2013
+	 * @author NaokiKamimura リストを更新するボタンの処理
+	 * @return JSON文字列を格納したList オーバーロード
+	 */
+	private List<PinpointLocations> scanJSON(String jsonData) {
+		LogUtil log = new LogUtil();
+		List<PinpointLocations> pinpointLocations = null;
+		V1 v1;// JSONのマッピングしたオブジェクトのあるクラス
+		try {
+			Gson gson = new Gson();
+			//TODO　最終的にString型のjsonDataが入るようにする
+			v1 = gson.fromJson(jsonData, V1.class);
+			pinpointLocations = v1.getPinpointLocations();
+		} catch (Exception e) {
+			log.output("Error", e.toString());
 		}
 		return pinpointLocations;
 	}
@@ -69,11 +87,10 @@ public class Json {
 	 */
 	public List<String> readNameList(Context context) {
 		LogUtil log = new LogUtil();
-		Http http = new Http();
 		List<String> nameList = new ArrayList<String>();
 		List<String> linkList = new ArrayList<String>();
 		try {
-			List<PinpointLocations> pinpointLocations = jsonText(context);
+			List<PinpointLocations> pinpointLocations = scanJSON();
 			String name = "";// 市区町村の取得
 			String link = "";// 天気予報画面URLの取得
 			String jsonSize = String.valueOf(pinpointLocations.size());
@@ -102,7 +119,7 @@ public class Json {
 		LogUtil log = new LogUtil();
 		List<String> linkList = new ArrayList<String>();
 		try {
-			List<PinpointLocations> pinpointLocations = jsonText(context);
+			List<PinpointLocations> pinpointLocations = scanJSON(context);
 			String link = "";// 天気予報画面URLの取得
 			// 読み込んだJSONの長さ分値を取得
 			for (int i = 0; i < pinpointLocations.size(); i++) {
