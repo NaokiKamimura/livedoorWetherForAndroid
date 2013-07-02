@@ -5,6 +5,7 @@
 
 package jp.gr.java_conf.naoki_kamimura.http;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -19,9 +20,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
-import android.widget.Toast;
 
 public class Http {
+
+	public String jsonAddress() {
+
+		return null;
+	}
 
 	/**
 	 * @version 1.00 27 June 2013
@@ -37,8 +42,6 @@ public class Http {
 			URI uri = new URI(address);// URLオブジェクトの生成
 			HttpGet request = new HttpGet(uri);
 			HttpResponse response = httpClient.execute(request);// レスポンスとして送信
-			// <-------ここで落ちる------->
-			Toast.makeText(context, "接続を開始しました", Toast.LENGTH_SHORT).show();
 			String statusCode = conditionCheck(response);// ステータスコードの取得
 			// ステータスコードによって振り分け
 			switch (response.getStatusLine().getStatusCode()) {
@@ -67,7 +70,12 @@ public class Http {
 		}
 
 	}
-	//オーバーロード
+
+	/**
+	 * @version 1.00 02 July 2013
+	 * @author NaokiKamimura HTTP通信を開始する
+	 * @param アドレス名
+	 */
 	public void connection(String address) {
 		LogUtil log = new LogUtil();
 		HttpClient httpClient = new DefaultHttpClient();
@@ -76,13 +84,17 @@ public class Http {
 			URI uri = new URI(address);// URLオブジェクトの生成
 			HttpGet request = new HttpGet(uri);
 			HttpResponse response = httpClient.execute(request);// レスポンスとして送信
-			// <-------ここで落ちる------->
 			String statusCode = conditionCheck(response);// ステータスコードの取得
 			// ステータスコードによって振り分け
 			switch (response.getStatusLine().getStatusCode()) {
 			// 接続OK
 			case HttpStatus.SC_OK:
+				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+				response.getEntity().writeTo(outputStream);// レスポンスの情報を書込
+				String data;// JSONデータ
+				data = outputStream.toString();
 				log.output("status", "status code = " + statusCode);
+				log.output("status", data);
 				break;
 			// 404
 			case HttpStatus.SC_FORBIDDEN:
@@ -102,8 +114,8 @@ public class Http {
 			log.output("IOException", e.toString());
 		} catch (Exception e) {
 			log.output("Exception", "何らかの例外が発生しました:" + e.toString());
-		}finally{
-			disconnection(httpClient);//通信を切断
+		} finally {
+			disconnection(httpClient);// 通信を切断
 		}
 
 	}

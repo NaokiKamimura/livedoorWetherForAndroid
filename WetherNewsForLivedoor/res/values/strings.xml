@@ -11,7 +11,17 @@
     <!-- SecondActivity -->
     <string name="title_activity_second">本日の天気</string>
     <string name="restart_button">更新</string>
+    <string name="complete">完了</string>
+    <string name="BeginConnection">接続開始</string>
 
     <!-- HTTPクラス -->
-    <string name="connectionBegin">接続を開始しました</string>
+
+
+    <!-- JSONURL -->
+    <string name="json_tokyo">http://weather.livedoor.com/forecast/webservice/json/v1?city=130010</string>
+    <string name="title_activity_wether_view">WetherView</string>
+    
+    <!-- WetherViewActivity -->
+    <string name="wetherview_button">戻る</string>
+
 </resources>

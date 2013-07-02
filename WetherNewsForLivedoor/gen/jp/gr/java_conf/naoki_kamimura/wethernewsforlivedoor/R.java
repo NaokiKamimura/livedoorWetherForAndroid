@@ -35,36 +35,48 @@ public final class R {
         public static final int white_gra_button=0x7f020001;
     }
     public static final class id {
-        public static final int action_settings=0x7f090005;
+        public static final int action_settings=0x7f090008;
         public static final int listview=0x7f090003;
         public static final int main_button=0x7f090000;
         public static final int main_text=0x7f090001;
         public static final int restart_button=0x7f090004;
         public static final int secondActivity_TextView=0x7f090002;
+        public static final int wetherview=0x7f090006;
+        public static final int wetherview_button=0x7f090007;
+        public static final int wetherview_textView=0x7f090005;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int activity_second=0x7f030001;
+        public static final int activity_wether_view=0x7f030002;
     }
     public static final class menu {
         public static final int main=0x7f080000;
         public static final int second=0x7f080001;
+        public static final int wether_view=0x7f080002;
     }
     public static final class string {
+        public static final int BeginConnection=0x7f060008;
         public static final int action_settings=0x7f060001;
         /**  MainActivity 
          */
         public static final int app_name=0x7f060000;
         public static final int app_title=0x7f060004;
-        /**  HTTPクラス 
-         */
-        public static final int connectionBegin=0x7f060007;
+        public static final int complete=0x7f060007;
         public static final int hello_world=0x7f060002;
+        /**  HTTPクラス 
+ JSONURL 
+         */
+        public static final int json_tokyo=0x7f060009;
         public static final int main_button=0x7f060003;
         public static final int restart_button=0x7f060006;
         /**  SecondActivity 
          */
         public static final int title_activity_second=0x7f060005;
+        public static final int title_activity_wether_view=0x7f06000a;
+        /**  WetherViewActivity 
+         */
+        public static final int wetherview_button=0x7f06000b;
     }
     public static final class style {
         /** 
