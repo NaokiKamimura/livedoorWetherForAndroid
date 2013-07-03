@@ -11,7 +11,6 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
-import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.http.Http;
 import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.util.LogUtil;
 import android.content.Context;
 import android.content.res.AssetManager;
@@ -22,20 +21,9 @@ import com.google.gson.Gson;
 public class Json {
 
 	/**
-	 * @version 1.00 25 June 2013
-	 * @author NaokiKamimura Gsonライブラリを使い解析テスト用にまずJSON形式で生成する
-	 */
-	public void createJson() {
-		LogUtil log = new LogUtil();
-		// Gsonのオブジェクト作成
-		Gson gson = new Gson();
-		String testJson = gson.toJson("test");
-		log.output("testJson", testJson);
-	}
-
-	/**
 	 * @version 1.00 27 June 2013
 	 * @author NaokiKamimura リストを更新するボタンの処理
+	 * @param コンテキスト
 	 * @return JSON文字列を格納したList
 	 */
 	private List<PinpointLocations> scanJSON(Context context) {
@@ -64,14 +52,15 @@ public class Json {
 	 * @version 1.00 27 June 2013
 	 * @author NaokiKamimura リストを更新するボタンの処理
 	 * @return JSON文字列を格納したList オーバーロード
+	 * @param jsonの入ったString
 	 */
 	private List<PinpointLocations> scanJSON(String jsonData) {
 		LogUtil log = new LogUtil();
 		List<PinpointLocations> pinpointLocations = null;
-		V1 v1;// JSONのマッピングしたオブジェクトのあるクラス
+		V1 v1;// JSONのマッピングしたオブジェクトクラス
 		try {
 			Gson gson = new Gson();
-			//TODO　最終的にString型のjsonDataが入るようにする
+			// TODO　最終的にString型のjsonDataが入るようにする
 			v1 = gson.fromJson(jsonData, V1.class);
 			pinpointLocations = v1.getPinpointLocations();
 		} catch (Exception e) {
@@ -84,62 +73,61 @@ public class Json {
 	 * @version 1.00 25 June 2013
 	 * @author NaokiKamimura JSONファイルを解析する
 	 * @return 市区町村の入ったList
+	 * @param コンテキスト
 	 */
-	public List<String> readNameList(Context context) {
+	public List<String> wetherPlaceNameList(Context context) {
 		LogUtil log = new LogUtil();
-		List<String> nameList = new ArrayList<String>();
-		List<String> linkList = new ArrayList<String>();
+		ArrayList<String> json_WetherPlaceNameList = new ArrayList<String>();
 		try {
-			List<PinpointLocations> pinpointLocations = scanJSON();
-			String name = "";// 市区町村の取得
-			String link = "";// 天気予報画面URLの取得
+			//TODO scanJSONへjsonDataを入れたい
+			List<PinpointLocations> pinpointLocations = scanJSON(context);
+			String placeName = "";// 市区町村の取得
 			String jsonSize = String.valueOf(pinpointLocations.size());
 			// 読み込んだJSONの長さ分値を取得
 			for (int i = 0; i < pinpointLocations.size(); i++) {
-				name = pinpointLocations.get(i).getName();
-				nameList.add(name);// 市区町村をリストへ
-				link = pinpointLocations.get(i).getLink();
-				linkList.add(link);// リンクをリストへ
-				log.output("jsonName:" + i, name);
-				log.output("jsonLink:" + i, link);
+				placeName = pinpointLocations.get(i).getName();
+				json_WetherPlaceNameList.add(placeName);// 市区町村をリストへ
+				log.output("jsonName:" + i, placeName);
 			}
 			log.output("tag", "jsonSize:" + jsonSize);
 		} catch (Exception e) {
 			log.output("Error", "");
 		}
-		return nameList;
+		return json_WetherPlaceNameList;
 	}
 
 	/**
 	 * @version 1.00 02 July 2013
 	 * @author NaokiKamimura JSONファイルを解析する
 	 * @return 天気予報リンクアドレスの入ったList
+	 * @param コンテキスト
 	 */
-	public List<String> readLinkList(Context context) {
+	public List<String> wetherLinkList(Context context) {
 		LogUtil log = new LogUtil();
-		List<String> linkList = new ArrayList<String>();
+		List<String> json_WetherLinkList = new ArrayList<String>();
 		try {
 			List<PinpointLocations> pinpointLocations = scanJSON(context);
-			String link = "";// 天気予報画面URLの取得
+			String wetherLink = "";// 天気予報画面URLの取得
 			// 読み込んだJSONの長さ分値を取得
 			for (int i = 0; i < pinpointLocations.size(); i++) {
-				link = pinpointLocations.get(i).getLink();
-				linkList.add(link);// リンクをリストへ
+				wetherLink = pinpointLocations.get(i).getLink();
+				json_WetherLinkList.add(wetherLink);// リンクをリストへ
 			}
 		} catch (Exception e) {
-			log.output("Error", "");
+			log.output("Error", "何らかのエラー");
 		}
-		return linkList;
+		return json_WetherLinkList;
 	}
 
 	/**
 	 * @version 1.00 27 June 2013
 	 * @author NaokiKamimura
 	 * @return JSON名前リストデータの入ったadapter
+	 * @param コンテキスト
 	 */
-	public ArrayAdapter<String> getNameListAdapter(Context context) {
+	public ArrayAdapter<String> placeNameAdapter(Context context) {
 		List<String> adapterList = new ArrayList<String>();
-		adapterList = readNameList(context);
+		adapterList = wetherPlaceNameList(context);
 		// JSONのデータをadapterへ入れる
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
 				android.R.layout.simple_list_item_1);

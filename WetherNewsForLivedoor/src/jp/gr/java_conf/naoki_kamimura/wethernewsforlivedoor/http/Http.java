@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.json.Json;
 import jp.gr.java_conf.naoki_kamimura.wethernewsforlivedoor.util.LogUtil;
 
 import org.apache.http.HttpResponse;
@@ -21,21 +20,23 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.content.Context;
+import android.util.Log;
 
 public class Http {
+	private String jsonData;// 解析されたJSONデータを格納
 
 	/**
 	 * @version 1.00 27 June 2013
 	 * @author NaokiKamimura HTTP通信を開始する
 	 * @param コンテキスト
-	 *            ,アドレス名
+	 *            ,URLアドレス名
 	 */
-	public void connection(Context context, String address) {
+	public void connection(Context context, String urlAddress) {
 		LogUtil log = new LogUtil();
 		HttpClient httpClient = new DefaultHttpClient();
-		log.output("URL:", address);// URLのログを出す
+		log.output("URL:", urlAddress);// URLのログを出す
 		try {
-			URI uri = new URI(address);// URLオブジェクトの生成
+			URI uri = new URI(urlAddress);// URLオブジェクトの生成
 			HttpGet request = new HttpGet(uri);
 			HttpResponse response = httpClient.execute(request);// レスポンスとして送信
 			String statusCode = conditionCheck(response);// ステータスコードの取得
@@ -68,41 +69,54 @@ public class Http {
 	}
 
 	/**
+	 * @version 1.00 03 July 2013
+	 * @author NaokiKamimura
+	 * @param HttpResponse
+	 * @return String型JSONデータ
+	 */
+	public String convertJSONData(HttpResponse httpResponse) {
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		try {
+			httpResponse.getEntity().writeTo(outputStream);// レスポンスの情報を書込
+		} catch (IOException e) {
+			Log.v("IOException:", e.toString());
+		}
+		String jsonData = outputStream.toString();// レスポンスデータのセット
+		return jsonData;
+	}
+
+	/**
 	 * @version 1.00 02 July 2013
 	 * @author NaokiKamimura HTTP通信を開始する
-	 * @param アドレス名
+	 * @param URLアドレス名
 	 *            オーバーロード
 	 */
-	public void connection(String address) {
+	public void connection(String urlAddress) {
 		LogUtil log = new LogUtil();
-		Json json = new Json();
 		HttpClient httpClient = new DefaultHttpClient();
-		log.output("URL:", address);// URLのログを出す
+		log.output("URL:", urlAddress);// URLのログを出す
 		try {
-			URI uri = new URI(address);// URLオブジェクトの生成
-			HttpGet request = new HttpGet(uri);
-			HttpResponse response = httpClient.execute(request);// レスポンスとして送信
-			String statusCode = conditionCheck(response);// ステータスコードの取得
+			URI uri = new URI(urlAddress);// URLオブジェクトの生成
+			HttpGet httpRequest = new HttpGet(uri);
+			HttpResponse httpResponse = httpClient.execute(httpRequest);// レスポンスとして送信
+			String httpStatusCode = conditionCheck(httpResponse);// ステータスコードの取得
 			// ステータスコードによって振り分け
-			switch (response.getStatusLine().getStatusCode()) {
+			switch (httpResponse.getStatusLine().getStatusCode()) {
 			// 接続OK
 			case HttpStatus.SC_OK:
-				ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-				response.getEntity().writeTo(outputStream);// レスポンスの情報を書込
-				//TODO dataを解析メソッドへ受け渡す方法を確立する
-				String data = outputStream.toString();// レスポンスデータのセット
-				log.output("status", "status code = " + statusCode);
+				// もしOKなら、httpResponseの値をStringにするメソッドへ渡す
+				jsonData = convertJSONData(httpResponse);// フィールド変数へレスポンスデータのセット
+				log.output("status", "status code = " + httpStatusCode);
 				break;
 			// 404
 			case HttpStatus.SC_FORBIDDEN:
-				log.output("status", "status code = " + statusCode);
+				log.output("status", "status code = " + httpStatusCode);
 				break;
 			// どれにも当てはまらない場合
 			default:
-				log.output("status", "status code = " + statusCode);
+				log.output("status", "status code = " + httpStatusCode);
 				break;
 			}
-
 		} catch (URISyntaxException e) {
 			log.output("URISyntaxException", e.toString());
 		} catch (ClientProtocolException e) {
@@ -114,7 +128,6 @@ public class Http {
 		} finally {
 			disconnection(httpClient);// 通信を切断
 		}
-
 	}
 
 	/**
@@ -133,9 +146,9 @@ public class Http {
 	 * @return String型のステータスコード
 	 */
 	public String conditionCheck(HttpResponse response) {
-		int status = response.getStatusLine().getStatusCode();
-		String statusCode = String.valueOf(status);// ステータスコードの取得
-		return statusCode;
+		int httpStatusCode = response.getStatusLine().getStatusCode();
+		String st_StatusCode = String.valueOf(httpStatusCode);// ステータスコードの取得
+		return st_StatusCode;
 
 	}
 }
